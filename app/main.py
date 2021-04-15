@@ -1,7 +1,10 @@
+from passlib.hash import pbkdf2_sha256
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1 import api_router
 from app.config.setting import settings
+
 
 app = FastAPI()
 

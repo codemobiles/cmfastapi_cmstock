@@ -9,6 +9,9 @@ sqlalchemy = "*"
 pydantic = "*"
 alembic = "*"
 passlib = "*"
+python-jose = "*"
+jose = "*"
+bcrypt = "*"
 
 [dev-packages]
 
