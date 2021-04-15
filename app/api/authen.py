@@ -1,16 +1,15 @@
 from datetime import datetime, timedelta
 
 from typing import Optional
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from app.db import get_db
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jose import JWTError, jwt
 
 from app.models.User import User as UserDB
-
-
 router = APIRouter()
 
 
@@ -62,13 +61,20 @@ def register(user: User, db: Session = Depends(get_db)):
 
 @router.post("/login")
 def login(user: User, db: Session = Depends(get_db)):
-    db_user = db.query(UserDB).filter(UserDB.username == user.username).first()
-    if not db_user:
-        return {"login": "nok", "error": "invalid username"}
-    if not verify_password(user.password, db_user.password):
-        return {"login": "nok", "error": "invalid password"}
+    try:
+        db_user = db.query(UserDB).filter(
+            UserDB.username == user.username).first()
+        if not db_user:
+            return {"login": "nok", "error": "invalid username"}
+        if not verify_password(user.password, db_user.password):
+            return {"login": "nok", "error": "invalid password"}
 
-    return {"login": "ok"}
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        token = create_access_token(
+            data={"sub": user.username}, expires_delta=access_token_expires)
+        return {"login": "ok", "token": token}
+    except Exception as e:
+        return {"login": "nok", "error": str(e)}
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
@@ -82,7 +88,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def hasAuthorized(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -92,17 +98,16 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
-            raise credentials_exception
+            return False
         token_data = TokenData(username=username)
+        return token_data
     except JWTError:
-        raise credentials_exception
-    user = get_user(fake_users_db, username=token_data.username)
-    if user is None:
-        raise credentials_exception
-    return user
+        return False
 
 
-async def get_current_active_user(current_user: User = Depends(get_current_user)):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
-    return current_user
+@router.get("/items/")
+async def read_own_items(isAuthorized: bool = Depends(hasAuthorized)):
+    if isAuthorized:
+        return [1, 2, 3]
+    else:
+        return {"Error": "Unauthorized"}
