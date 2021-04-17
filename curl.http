@@ -50,3 +50,25 @@ curl -X 'POST' \
   "price": 30,
   "image": "test.jpg"
 }'
+
+### update product
+curl -X 'PUT' \
+  'http://localhost:8000/product/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ1NjkwMH0.r94Alr2P8Ruw_3tT4ZfK-03c76vNfuGbN6a7ZjQB0kM' \
+  -d '{   
+  "id": "15",
+  "name": "kan",
+  "stock": 11,
+  "price": 33,
+  "image": "2test.jpg"
+}'
+
+
+### Delete product by id
+curl -X 'DELETE' \
+  'http://localhost:8000/product/16' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ2NTAyM30.DcHExvDZYoMiyc1X1dLtOHd2pNtxp7VLe7MtuFNCaAc'

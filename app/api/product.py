@@ -46,12 +46,29 @@ async def insert_product(product: schema.Product, db: Session = Depends(get_db),
         return {"Error": "Unauthorized"}
 
 
+@router.put("/")
+async def insert_product(product: schema.Product, db: Session = Depends(get_db), isAuthorized: bool = Depends(security.hasAuthorized)):
+    if isAuthorized:
+        try:
+            product_db = db.query(ProductDB).filter(
+                ProductDB.id == product.id)
+            product_db.update({ProductDB.name: product.name,
+                              ProductDB.price: product.price,
+                              ProductDB.stock: product.stock})
+            db.commit()
+            return {"result": "ok"}
+        except Exception as e:
+            return {"product": "nok", "error": str(e)}
+    else:
+        return {"Error": "Unauthorized"}
+
+
 @router.delete("/{id}")
 async def delete_product(id: str, db: Session = Depends(get_db), isAuthorized: bool = Depends(security.hasAuthorized)):
     if isAuthorized:
         try:
-            product = db.query(ProductDB).filter(ProductDB.id == id).first()
-            product.delete()
+            products = db.query(ProductDB).filter(ProductDB.id == id)
+            products.delete()
             db.commit()
             return {"result": "ok"}
         except Exception as e:
