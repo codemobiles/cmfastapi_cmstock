@@ -22,9 +22,31 @@ curl -X 'POST' \
 }'
 
 
-### item
+### get all products
 curl -X 'GET' \
-  'http://localhost:8000/authen/items' \
+  'http://localhost:8000/product' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYxODQ4ODgyMn0.2dqpZfUElY3rt4MbyG47Kaw9K-S7q5J-7Yodct3y8Sw'
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYxODY1Mjg4Mn0.IOQTyyhVm_1UKodGemYq4d9OoHkH8MlEXZvuh9CljMY'
+
+
+### get product by id
+curl -X 'GET' \
+  'http://localhost:8000/product/2' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYxODY1Mjg4Mn0.IOQTyyhVm_1UKodGemYq4d9OoHkH8MlEXZvuh9CljMY'
+
+
+### add product
+curl -X 'POST' \
+  'http://localhost:8000/product/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ1NjkwMH0.r94Alr2P8Ruw_3tT4ZfK-03c76vNfuGbN6a7ZjQB0kM' \
+  -d '{   
+  "name": "I am lek",
+  "stock": 10,
+  "price": 30,
+  "image": "test.jpg"
+}'

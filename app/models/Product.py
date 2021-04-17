@@ -12,3 +12,6 @@ class Product(Base):
     price = Column(Float)
     image = Column(String(256))
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    class Config:
+        arbitrary_types_allowed = True
