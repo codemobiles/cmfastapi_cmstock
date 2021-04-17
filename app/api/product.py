@@ -1,10 +1,13 @@
 import datetime
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, File, Form, UploadFile
 from app.api import security
 from app.models.Product import Product as ProductDB
 from app.db import get_db
 from sqlalchemy.orm import Session
 from app.api import schema
+import shutil
+from pathlib import Path
+
 router = APIRouter()
 
 
@@ -44,6 +47,26 @@ async def insert_product(product: schema.Product, db: Session = Depends(get_db),
             return {"product": "nok", "error": str(e)}
     else:
         return {"Error": "Unauthorized"}
+
+
+def save_upload_file(upload_file: UploadFile, destination: Path) -> None:
+    try:
+        with destination.open("wb") as buffer:
+            shutil.copyfileobj(upload_file.file, buffer)
+    finally:
+        upload_file.file.close()
+
+
+@router.post("/files")
+async def create_file(image: UploadFile = File(...), token: str = Form(...), db: Session = Depends(get_db)):
+    try:
+        save_upload_file(image, Path(
+            "/Users/chaiyasit/Desktop/Training/python_training/cmfastapi_cmstock/app/uploaded/images/test.jpg"))
+        return {
+            "token": token
+        }
+    except Exception as e:
+        return {"product": "nok", "error": str(e)}
 
 
 @router.put("/")
