@@ -14,15 +14,13 @@ router = APIRouter()
 
 
 @router.get("/")
-async def get_product(db: Session = Depends(get_db), isAuthorized: bool = Depends(security.hasAuthorized)):
-    if isAuthorized:
-        try:
-            products = db.query(ProductDB)
-            return products.all()
-        except Exception as e:
-            return {"product": "nok", "error": str(e)}
-    else:
-        return {"Error": "Unauthorized"}
+async def get_product(db: Session = Depends(get_db)):
+
+    try:
+        products = db.query(ProductDB)
+        return products.all()
+    except Exception as e:
+        return {"product": "nok", "error": str(e)}
 
 
 @router.get("/{id}")

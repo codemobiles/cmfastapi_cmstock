@@ -1,6 +1,7 @@
 from passlib.hash import pbkdf2_sha256
+import time
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1 import api_router
 from app.config.setting import settings
@@ -10,6 +11,16 @@ from fastapi.staticfiles import StaticFiles
 app = FastAPI()
 app.mount("/images", StaticFiles(directory="uploaded/images",
           html=True), name="images")
+
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    process_time = time.time() - start_time
+    response.headers["X-Process-Time"] = str(process_time)
+    return response
+
 
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:

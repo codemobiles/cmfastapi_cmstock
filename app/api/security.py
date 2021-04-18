@@ -36,8 +36,11 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
-async def hasAuthorized(token: str = Depends(oauth2_scheme)):
+def test():
+    return False
 
+
+async def hasAuthorized(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -52,7 +55,7 @@ async def hasAuthorized(token: str = Depends(oauth2_scheme)):
         token_data = TokenData(username=username)
         return token_data
     except JWTError:
-        return False
+        raise HTTPException(status_code=400, detail="Unauthorized JWT")
 
 
 def verify_password(plain_password, hashed_password):
