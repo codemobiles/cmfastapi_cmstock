@@ -68,40 +68,32 @@ curl -X 'PUT' \
 
 ### Delete product by id
 curl -X 'DELETE' \
-  'http://localhost:8000/product/16' \
+  'http://localhost:8000/product/27' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ2NTAyM30.DcHExvDZYoMiyc1X1dLtOHd2pNtxp7VLe7MtuFNCaAc'
 
-### Upload file
+
+
+### Insert Project
 curl -X 'POST' \
-  'http://localhost:8000/product/files' \
+  'http://localhost:8000/product/' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
-  -F 'file=@2021_python.png;type=image/png' \
-  -F 'token=444'
+  -F 'image=@test.jpg;type=image/jpeg' \
+  -F 'name=1' \
+  -F 'price=2' \
+  -F 'stock=3'
 
-### Upload file
-curl -X 'POST' \
-  'http://localhost:8000/product/files' \
+
+### Update Project
+curl -X 'PUT' \
+  'http://localhost:8000/product/' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ2NTAyM30.DcHExvDZYoMiyc1X1dLtOHd2pNtxp7VLe7MtuFNCaAc' \
-  -F 'file=@./test.jpg;type=image/jpeg' \
-  -F 'token=1234'
-
-
-### Create 
-POST http://localhost:8000/product/files HTTP/1.1
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="token";
-
-1234
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data; name="image"; filename="test.jpg"
-Content-Type: image/png
-
-< ./test.jpg
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
+  -F 'image=@test2.jpg;type=image/jpeg' \
+  -F 'id=26' \
+  -F 'name=test test' \
+  -F 'price=20' \
+  -F 'stock=30'  
