@@ -4,9 +4,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1 import api_router
 from app.config.setting import settings
+from fastapi.staticfiles import StaticFiles
 
 
 app = FastAPI()
+app.mount("/images", StaticFiles(directory="uploaded/images",
+          html=True), name="images")
 
 # Set all CORS enabled origins
 if settings.BACKEND_CORS_ORIGINS:
