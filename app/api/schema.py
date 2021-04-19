@@ -15,3 +15,15 @@ class Product(BaseModel):
     price: float
     image: str
     created_at: Optional[str] = None
+
+
+class Transaction(BaseModel):
+    id: Optional[str] = None
+    total: float
+    paid: float
+    change: float
+    payment_type: str
+    payment_detail: str
+    order_list: str
+    staff_id: str
+    created_at: Optional[str] = None

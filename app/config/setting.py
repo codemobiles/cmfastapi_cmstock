@@ -5,7 +5,7 @@ from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, v
 
 
 class Settings(BaseSettings):
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = ["http://192.168.1.4:5000"]
+    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = ["http://localhost:5000"]
 
     @validator("BACKEND_CORS_ORIGINS", pre=True)
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
