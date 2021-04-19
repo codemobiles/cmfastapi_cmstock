@@ -30,14 +30,14 @@ def login(user: schema.User, db: Session = Depends(get_db)):
         db_user = db.query(UserDB).filter(
             UserDB.username == user.username).first()
         if not db_user:
-            return {"login": "nok", "error": "invalid username"}
+            return {"result": "nok", "error": "invalid username"}
         if not security.verify_password(user.password, db_user.password):
-            return {"login": "nok", "error": "invalid password"}
+            return {"result": "nok", "error": "invalid password"}
 
         access_token_expires = timedelta(
             minutes=security.ACCESS_TOKEN_EXPIRE_MINUTES)
         token = security.create_access_token(
             data={"sub": user.username}, expires_delta=access_token_expires)
-        return {"login": "ok", "token": token}
+        return {"result": "ok", "token": token}
     except Exception as e:
-        return {"login": "nok", "error": str(e)}
+        return {"result": "nok", "error": str(e)}

@@ -1,6 +1,6 @@
 ### register
 curl -X 'POST' \
-  'http://localhost:8000/authen/register' \
+  'http://localhost:8081/authen/register' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -12,7 +12,7 @@ curl -X 'POST' \
 
 ### login
 curl -X 'POST' \
-  'http://localhost:8000/authen/login' \
+  'http://localhost:8081/api/v2/login' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -24,23 +24,23 @@ curl -X 'POST' \
 
 ### get all products
 curl -X 'GET' \
-  'http://localhost:8000/product' \
+  'http://localhost:8081/api/v2/product' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer eyJhbGciOiJIfUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDU1OTg0NH0.luSh5phbZQLa-P9Vpk2vyrmeCVzVZCUfqEiP9tpGZ9s'
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDYxNjk3NH0.6eP2pd_F6dT5rfZ7N-dtEFknKQ45QJ8UgvR-2p-3R38'
 
 
 ### get product by id
 curl -X 'GET' \
-  'http://localhost:8000/product/2' \
+  'http://localhost:8081/api/v2/product/2' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYxODY1Mjg4Mn0.IOQTyyhVm_1UKodGemYq4d9OoHkH8MlEXZvuh9CljMY'
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDYxNjk3NH0.6eP2pd_F6dT5rfZ7N-dtEFknKQ45QJ8UgvR-2p-3R38'
 
 
 ### add product
 curl -X 'POST' \
-  'http://localhost:8000/product/' \
+  'http://localhost:8081/api/v2/product/' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ1NjkwMH0.r94Alr2P8Ruw_3tT4ZfK-03c76vNfuGbN6a7ZjQB0kM' \
@@ -53,7 +53,7 @@ curl -X 'POST' \
 
 ### update product
 curl -X 'PUT' \
-  'http://localhost:8000/product/' \
+  'http://localhost:8081/product/' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ1NjkwMH0.r94Alr2P8Ruw_3tT4ZfK-03c76vNfuGbN6a7ZjQB0kM' \
@@ -68,7 +68,7 @@ curl -X 'PUT' \
 
 ### Delete product by id
 curl -X 'DELETE' \
-  'http://localhost:8000/product/27' \
+  'http://localhost:8081/product/27' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ2NTAyM30.DcHExvDZYoMiyc1X1dLtOHd2pNtxp7VLe7MtuFNCaAc'
@@ -77,9 +77,10 @@ curl -X 'DELETE' \
 
 ### Insert Project
 curl -X 'POST' \
-  'http://localhost:8000/product/' \
+  'http://localhost:8081/api/v2/product/' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDYxNjk3NH0.6eP2pd_F6dT5rfZ7N-dtEFknKQ45QJ8UgvR-2p-3R38' \
   -F 'image=@test.jpg;type=image/jpeg' \
   -F 'name=1' \
   -F 'price=2' \
@@ -88,10 +89,10 @@ curl -X 'POST' \
 
 ### Update Project
 curl -X 'PUT' \
-  'http://localhost:8000/product/' \
+  'http://localhost:8081/api/v2/product/' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
-  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDQ2NTAyM30.DcHExvDZYoMiyc1X1dLtOHd2pNtxp7VLe7MtuFNCaAc' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYyMDYxNjk3NH0.6eP2pd_F6dT5rfZ7N-dtEFknKQ45QJ8UgvR-2p-3R38' \
   -F 'image=@test2.jpg;type=image/jpeg' \
   -F 'id=26' \
   -F 'name=test test' \

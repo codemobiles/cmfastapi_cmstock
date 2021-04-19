@@ -36,4 +36,4 @@ if settings.BACKEND_CORS_ORIGINS:
 else:
     print("No cors settings")
 
-app.include_router(api_router)
+app.include_router(api_router, prefix="/api/v2")

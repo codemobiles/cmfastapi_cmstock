@@ -13,9 +13,19 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 api_router = APIRouter()
-api_router.include_router(authen.router, prefix="/authen", tags=["authen"])
 
 api_router.include_router(
-    product.router, prefix="/product", tags=["product"], dependencies=[Depends(security.hasAuthorized)])
+    authen.router,
+    tags=["authen"])
+
 api_router.include_router(
-    transaction.router, prefix="/transaction", tags=["transaction"])
+    product.router,
+    prefix="/product",
+    tags=["product"],
+    dependencies=[Depends(security.checkAuthorized)])
+
+api_router.include_router(
+    transaction.router,
+    prefix="/transaction",
+    tags=["transaction"],
+    dependencies=[Depends(security.checkAuthorized)])
